@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class Jugador : MonoBehaviour
 {
@@ -10,6 +9,8 @@ public class Jugador : MonoBehaviour
     private PerfilJugador perfilJugador;
     public PerfilJugador PerfilJugador { get => perfilJugador; }
 
+    [SerializeField]
+    private int vidasIniciales = 5; // Este valor se puede ajustar en el Inspector para definir las vidas iniciales del jugador
 
     //---------- Eventos del Jugador ----------//
 
@@ -21,15 +22,19 @@ public class Jugador : MonoBehaviour
 
     private void Start()
     {
+        perfilJugador.Vida = vidasIniciales; // Inicializamos la vida del jugador con el valor de vidasIniciales
         OnLivesChanged.Invoke(perfilJugador.Vida);
-        OnTextChanged.Invoke(GameManager.Instance.GetScore().ToString());
+        OnTextChanged.Invoke(perfilJugador.Vida.ToString());
     }
 
     public void ModificarVida(int puntos)
     {
         perfilJugador.Vida += puntos;
-        GameManager.Instance.AddScore(puntos * 100);
-        OnTextChanged.Invoke(GameManager.Instance.GetScore().ToString());
+
+        // Aseguramos que la vida no baje de 0 ni supere el valor de vidasIniciales
+        perfilJugador.Vida = Mathf.Clamp(perfilJugador.Vida, 0, vidasIniciales);
+
+        OnTextChanged.Invoke(perfilJugador.Vida.ToString());
         OnLivesChanged.Invoke(perfilJugador.Vida);
         Debug.Log(EstasVivo());
     }
