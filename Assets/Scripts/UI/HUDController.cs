@@ -10,6 +10,31 @@ public class HUDController : MonoBehaviour
     [SerializeField] GameObject iconoVida;
     [SerializeField] GameObject contenedorIconosVida;
 
+
+    private void OnEnable()
+    {
+        GameEvents.OnPause += Pausar;
+        GameEvents.OnResume += Reanudar;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnPause -= Pausar;
+        GameEvents.OnResume -= Reanudar;
+    }
+
+    private void Pausar()
+    {
+
+        ActualizarTextoHUD("PAUSADO");
+    }
+
+    private void Reanudar()
+    {
+        ActualizarTextoHUD(GameManager.Instance.GetScore().ToString());
+
+    }
+
     public void ActualizarTextoHUD(string nuevoTexto)
     {
         Debug.Log("SE LLAMA " + nuevoTexto);
