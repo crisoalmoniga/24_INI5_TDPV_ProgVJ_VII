@@ -22,9 +22,9 @@ public class Jugador : MonoBehaviour
 
     private void Start()
     {
-        perfilJugador.Vida = vidasIniciales; // Inicializamos la vida del jugador con el valor de vidasIniciales
+        //perfilJugador.Vida = vidasIniciales; // Inicializamos la vida del jugador con el valor de vidasIniciales
         OnLivesChanged.Invoke(perfilJugador.Vida);
-        OnTextChanged.Invoke(perfilJugador.Vida.ToString());
+        OnTextChanged.Invoke(GameManager.Instance.GetScore().ToString());
     }
 
     public void ModificarVida(int puntos)
@@ -32,9 +32,9 @@ public class Jugador : MonoBehaviour
         perfilJugador.Vida += puntos;
 
         // Aseguramos que la vida no baje de 0 ni supere el valor de vidasIniciales
-        perfilJugador.Vida = Mathf.Clamp(perfilJugador.Vida, 0, vidasIniciales);
-
-        OnTextChanged.Invoke(perfilJugador.Vida.ToString());
+        //perfilJugador.Vida = Mathf.Clamp(perfilJugador.Vida, 0, vidasIniciales);
+        GameManager.Instance.AddScore(puntos * 100);
+        OnTextChanged.Invoke(GameManager.Instance.GetScore().ToString());
         OnLivesChanged.Invoke(perfilJugador.Vida);
         Debug.Log(EstasVivo());
     }
