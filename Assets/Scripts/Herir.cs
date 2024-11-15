@@ -13,10 +13,20 @@ public class Herir : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Jugador jugador = collision.gameObject.GetComponent<Jugador>();
-            jugador.ModificarVida(-puntos);
-            Debug.Log(" PUNTOS DE DAÑO REALIZADOS AL JUGADOR " + puntos);
-            //Destroy(gameObject);
-            gameObject.SetActive(false);
+
+            // Validación para asegurar que el componente Jugador no es null
+            if (jugador != null)
+            {
+                jugador.ModificarVida(-puntos);
+                Debug.Log("PUNTOS DE DAÑO REALIZADOS AL JUGADOR: " + puntos);
+
+                // Opcional: Desactiva el objeto después de aplicar el daño
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.LogError("No se encontró el componente Jugador en el objeto de colisión.");
+            }
         }
     }
 }

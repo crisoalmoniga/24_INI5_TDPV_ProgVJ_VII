@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         score += points;
 
-        if(score < 0)
+        if(score <= 0)
         {
             ApplicationManager.Instance.GoToPreviousScene();
         }
