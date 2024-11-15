@@ -28,12 +28,20 @@ public class GameManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
+        Debug.Log("Puntaje actualizado a: " + score);
 
-        if(score <= 0)
+        if (score <= 0)
         {
-            ApplicationManager.Instance.GoToPreviousScene();
+            if (ApplicationManager.Instance != null)
+            {
+                Debug.Log("Cambiando a la escena previa...");
+                ApplicationManager.Instance.GoToPreviousScene();
+            }
+            else
+            {
+                Debug.LogError("ApplicationManager.Instance es null. Asegúrate de que esté en la escena.");
+            }
         }
-
     }
 
     public void ResetScore()
